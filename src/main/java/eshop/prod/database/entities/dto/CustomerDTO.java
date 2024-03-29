@@ -9,3 +9,12 @@ public class CustomerDTO {
     private String email;
     private String address;
 }
+
+/*
+ json example
+ {
+    "name": "John Doe",
+    "email": "HbqFP@example.com",
+    "address": "123 Main St, Anytown USA"
+ }
+ */
