@@ -18,7 +18,7 @@ CREATE TABLE product (
     brand VARCHAR(255) NOT NULL,
     image TEXT NOT NULL,
     stock INTEGER NOT NULL
-)
+);
 
 -- Cliente: representa los clientes quienes compran los productos
 -- ● id: PK
@@ -31,7 +31,7 @@ CREATE TABLE customer (
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
     address VARCHAR(255) NOT NULL
-)
+);
 
 -- Pedido: representa un pedido de compra realizado por un cliente.
 -- ● id: PK
@@ -40,12 +40,12 @@ CREATE TABLE customer (
 -- ● status: estado actual del pedido, los valores podrán ser, PENDIENTE,
 -- ENVIADO y ENTREGADO
 
-CREATE TABLE order (
+CREATE TABLE orders (
     id_order SERIAL PRIMARY KEY,
     customer_id INTEGER NOT NULL REFERENCES customer(id_customer),
     order_date TIMESTAMP NOT NULL CHECK (order_date > now()),
     status VARCHAR(255) NOT NULL CHECK (status IN ('PENDIENTE', 'ENVIADO', 'ENTREGADO'))
-)
+);
 
 -- ItemPedido: Representa los artículos individuales dentro de un pedido.
 -- ● id: PK
@@ -56,11 +56,11 @@ CREATE TABLE order (
 
 CREATE TABLE order_item (
     id_order_item SERIAL PRIMARY KEY,
-    order_id INTEGER NOT NULL REFERENCES order(id_order),
+    order_id INTEGER NOT NULL REFERENCES orders(id_order),
     product_id INTEGER NOT NULL REFERENCES product(id_product),
     quantity INTEGER NOT NULL,
     unit_price NUMERIC(10, 2) NOT NULL
-)
+);
 
 -- Pago: Representa los datos de pago de un pedido.
 -- ● Id: PK
@@ -72,11 +72,11 @@ CREATE TABLE order_item (
 
 CREATE TABLE payment (
     id_payment SERIAL PRIMARY KEY,
-    order_id INTEGER NOT NULL REFERENCES order(id_order),
+    order_id INTEGER NOT NULL REFERENCES orders(id_order),
     amount NUMERIC(10, 2) NOT NULL,
     payment_date TIMESTAMP NOT NULL CHECK (payment_date > now()),
     payment_method VARCHAR(255) NOT NULL CHECK (payment_method IN ('EFECTIVO', 'TARJETA_CREDITO', 'PAYPAL', 'NEQUI', 'DAVIPLATA', 'PSE'))
-)
+);
 
 -- DetalleEnvio: representa la información de envío de un pedido.
 -- ● id: PK
@@ -87,8 +87,8 @@ CREATE TABLE payment (
 
 CREATE TABLE shipment (
     id_shipment SERIAL PRIMARY KEY,
-    order_id INTEGER NOT NULL REFERENCES order(id_order),
+    order_id INTEGER NOT NULL REFERENCES orders(id_order),
     address VARCHAR(255) NOT NULL,
     carrier VARCHAR(255) NOT NULL,
     tracking_number VARCHAR(255) NOT NULL
-)
+);

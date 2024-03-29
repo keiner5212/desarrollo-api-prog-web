@@ -29,25 +29,25 @@ INSERT INTO customer (name, email, address) VALUES
 ('Bob Johnson', 'Jpj6A@example.com', '789 Pine St, Anytown, USA');
 
 
--- CREATE TABLE order (
---     id_order SERIAL PRIMARY KEY,
---     customer_id INTEGER NOT NULL REFERENCES customer(id_customer),
---     order_date TIMESTAMP NOT NULL CHECK (order_date > now()),
---     status VARCHAR(255) NOT NULL
--- )
-
-INSERT INTO order (customer_id, order_date, status) VALUES
-(1, '2025-01-01', 'PENDIENTE'),
-(2, '2025-01-01', 'ENVIADO'),
-(3, '2025-01-01', 'ENTREGADO');
-
-
--- CREATE TABLE order (
+-- CREATE TABLE orders (
 --     id_order SERIAL PRIMARY KEY,
 --     customer_id INTEGER NOT NULL REFERENCES customer(id_customer),
 --     order_date TIMESTAMP NOT NULL CHECK (order_date > now()),
 --     status VARCHAR(255) NOT NULL CHECK (status IN ('PENDIENTE', 'ENVIADO', 'ENTREGADO'))
--- )
+-- );
+
+INSERT INTO orders (customer_id, order_date, status) VALUES
+(1, '2025-01-01', 'PENDIENTE'),
+(2, '2025-01-01', 'ENVIADO'),
+(3, '2025-01-01', 'ENTREGADO');
+
+-- CREATE TABLE order_item (
+--     id_order_item SERIAL PRIMARY KEY,
+--     order_id INTEGER NOT NULL REFERENCES orders(id_order),
+--     product_id INTEGER NOT NULL REFERENCES product(id_product),
+--     quantity INTEGER NOT NULL,
+--     unit_price NUMERIC(10, 2) NOT NULL
+-- );
 
 INSERT INTO order_item (order_id, product_id, quantity, unit_price) VALUES
 (1, 1, 2, 10.99),
@@ -57,7 +57,7 @@ INSERT INTO order_item (order_id, product_id, quantity, unit_price) VALUES
 
 -- CREATE TABLE payment (
 --     id_payment SERIAL PRIMARY KEY,
---     order_id INTEGER NOT NULL REFERENCES order(id_order),
+--     order_id INTEGER NOT NULL REFERENCES orders(id_order),
 --     amount NUMERIC(10, 2) NOT NULL,
 --     payment_date TIMESTAMP NOT NULL CHECK (payment_date > now()),
 --     payment_method VARCHAR(255) NOT NULL CHECK (payment_method IN ('EFECTIVO', 'TARJETA_CREDITO', 'PAYPAL', 'NEQUI', 'DAVIPLATA', 'PSE'))
@@ -72,7 +72,7 @@ INSERT INTO payment (order_id, amount, payment_date, payment_method) VALUES
 
 -- CREATE TABLE shipment (
 --     id_shipment SERIAL PRIMARY KEY,
---     order_id INTEGER NOT NULL REFERENCES order(id_order),
+--     order_id INTEGER NOT NULL REFERENCES orders(id_order),
 --     address VARCHAR(255) NOT NULL,
 --     carrier VARCHAR(255) NOT NULL,
 --     tracking_number VARCHAR(255) NOT NULL

@@ -1,0 +1,8 @@
+spring.application.name=API-PROG-WEB
+server.port = 
+spring.datasource.url=
+spring.datasource.username=
+spring.datasource.password=
+spring.datasource.driver-class-name=org.postgresql.Driver
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.open-in-view=false

@@ -1,0 +1,51 @@
+package eshop.prod.database.entities;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+// CREATE TABLE product (
+//     id_product SERIAL PRIMARY KEY,
+//     name VARCHAR(255) NOT NULL,
+//     price NUMERIC(10, 2) NOT NULL,
+//     description VARCHAR(255) NOT NULL,
+//     brand VARCHAR(255) NOT NULL,
+//     image TEXT NOT NULL,
+//     stock INTEGER NOT NULL
+// );
+
+@Entity
+@Builder
+@Data
+@Table(name = "product")
+@NoArgsConstructor
+@AllArgsConstructor
+public class Product {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id_product;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Column(nullable = false)
+    private Double price;
+
+    @Column(nullable = false)
+    private String description;
+
+    @Column(nullable = false)
+    private String brand;
+
+    @Column(nullable = false)
+    private String image;
+    
+    @Column(nullable = false)
+    private Integer stock;
+}
