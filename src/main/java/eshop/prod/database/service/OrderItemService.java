@@ -1,5 +1,7 @@
 package eshop.prod.database.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -10,8 +12,6 @@ import eshop.prod.database.repository.OrderItemRepository;
 import eshop.prod.database.repository.OrderRepository;
 import eshop.prod.database.repository.ProductRepository;
 import lombok.extern.slf4j.Slf4j;
-
-import java.util.List;
 
 @Service
 @Slf4j
@@ -125,7 +125,7 @@ public class OrderItemService {
     public boolean deleteOrderItem(Long id) {
         try {
             orderItemRepository.deleteById(id);
-            return true;   
+            return true;
         } catch (Exception e) {
             log.error("Error deleting OrderItem", e);
         }

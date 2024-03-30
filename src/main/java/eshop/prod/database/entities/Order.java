@@ -42,5 +42,10 @@ public class Order {
 
     @Column(nullable = false)
     private String status;
+
+    public Order orElse(Object object) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'orElse'");
+    }
     
 }
