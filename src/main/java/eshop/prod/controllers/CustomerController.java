@@ -31,7 +31,7 @@ public class CustomerController {
         log.info("Getting all customers");
         HashMap<String, Object> response = new HashMap<>();
         List<CustomerDTO> customers = customerService.getAllCustomers();
-        response.put("customers", customers);
+        response.put("data", customers);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -39,12 +39,12 @@ public class CustomerController {
     public ResponseEntity<HashMap<String, Object>> getCustomerById(@PathVariable("id") Long id) {
         log.info("Getting customer by id: " + id);
         HashMap<String, Object> response = new HashMap<>();
-        CustomerDTO customer = customerService.getCustomerById(id);
-        if (customer == null) {
+        CustomerDTO data = customerService.getCustomerById(id);
+        if (data == null) {
             response.put("error", "Customer not found");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
-        response.put("customer", customer);
+        response.put("data", data);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -52,12 +52,12 @@ public class CustomerController {
     public ResponseEntity<HashMap<String, Object>> getCustomerByEmail(@PathVariable("email") String email) {
         log.info("Getting customer by email: " + email);
         HashMap<String, Object> response = new HashMap<>();
-        CustomerDTO customer = customerService.getCustomerByEmail(email);
-        if (customer == null) {
+        CustomerDTO data = customerService.getCustomerByEmail(email);
+        if (data == null) {
             response.put("error", "Customer not found");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
-        response.put("customer", customer);
+        response.put("data", data);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -65,8 +65,8 @@ public class CustomerController {
     public ResponseEntity<HashMap<String, Object>> getCustomerByAddress(@PathVariable("address") String address) {
         log.info("Getting customer by address: " + address);
         HashMap<String, Object> response = new HashMap<>();
-        List<CustomerDTO> customers = customerService.getCustomerByAddress(address);
-        response.put("customers", customers);
+        List<CustomerDTO> data = customerService.getCustomerByAddress(address);
+        response.put("data", data);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -74,8 +74,8 @@ public class CustomerController {
     public ResponseEntity<HashMap<String, Object>> getCustomerByName(@PathVariable("name") String name) {
         log.info("Getting customer by name: " + name);
         HashMap<String, Object> response = new HashMap<>();
-        List<CustomerDTO> customers = customerService.getCustomerByNameStartingWith(name);
-        response.put("customers", customers);
+        List<CustomerDTO> data = customerService.getCustomerByNameStartingWith(name);
+        response.put("data", data);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -83,8 +83,8 @@ public class CustomerController {
     public ResponseEntity<HashMap<String, Object>> createCustomer(@RequestBody CustomerDTO customerDTO) {
         log.info("Creating customer: " + customerDTO);
         HashMap<String, Object> response = new HashMap<>();
-        CustomerDTO createdCustomer = customerService.createCustomer(customerDTO);
-        response.put("customer", createdCustomer);
+        CustomerDTO data = customerService.createCustomer(customerDTO);
+        response.put("data", data);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -92,12 +92,12 @@ public class CustomerController {
     public ResponseEntity<HashMap<String, Object>> updateCustomer(@PathVariable("id") Long id, @RequestBody CustomerDTO customerDTO) {
         log.info("Updating customer: " + customerDTO);
         HashMap<String, Object> response = new HashMap<>();
-        CustomerDTO updatedCustomer = customerService.updateCustomer(id, customerDTO);
-        if (updatedCustomer == null) {
+        CustomerDTO data = customerService.updateCustomer(id, customerDTO);
+        if (data == null) {
             response.put("error", "Error updating customer");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
-        response.put("customer", updatedCustomer);
+        response.put("data", data);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -106,7 +106,7 @@ public class CustomerController {
         log.info("Deleting customer with id: " + id);
         HashMap<String, Object> response = new HashMap<>();
         if (customerService.deleteCustomer(id)) {
-            response.put("message", "Customer deleted successfully");
+            response.put("data", "Customer deleted successfully");
         } else {
             response.put("error", "Error deleting customer");
         }

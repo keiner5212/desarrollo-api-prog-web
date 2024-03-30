@@ -46,4 +46,25 @@ public class OrderItem {
     
     @Column(nullable = false)
     private Double unit_price;
+
+    /** Update only the fields that are not null
+     * @param original
+     * @param updated
+     * @return
+     */
+    public OrderItem updateOnllyNecesary(OrderItem original, OrderItem updated) {
+        if (updated.getOrder_id() != null) {
+            original.setOrder_id(updated.getOrder_id());
+        }
+        if (updated.getProduct_id() != null) {
+            original.setProduct_id(updated.getProduct_id());
+        }
+        if (updated.getQuantity() != null) {
+            original.setQuantity(updated.getQuantity());
+        }
+        if (updated.getUnit_price() != null) {
+            original.setUnit_price(updated.getUnit_price());
+        }
+        return original;
+    }
 }
