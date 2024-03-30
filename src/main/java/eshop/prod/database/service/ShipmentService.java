@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import eshop.prod.database.entities.Order;
 import eshop.prod.database.entities.Shipment;
 import eshop.prod.database.entities.dto.ShipmentDTO;
 import eshop.prod.database.entities.mappers.ShipmentMapper;
@@ -17,8 +16,9 @@ import lombok.extern.slf4j.Slf4j;
 public class ShipmentService {
     // CRUD create, read, update, delete
 
-    private ShipmentRepository  shipmentRepository;
-    //READ ALL
+    private ShipmentRepository shipmentRepository;
+
+    // READ ALL
     public List<ShipmentDTO> getAllShipments() {
         try {
             List<Shipment> shipments = shipmentRepository.findAll();
@@ -95,6 +95,7 @@ public class ShipmentService {
         }
         return List.of();
     }
+
     // Find shipping details by tracking number
     public List<ShipmentDTO> findByTrackingNumber(String trackingNumber) {
         try {
@@ -106,7 +107,7 @@ public class ShipmentService {
         return List.of();
     }
 
-    /*Find shipping details by state */
+    /* Find shipping details by state */
     public List<ShipmentDTO> findByState(String state) {
         try {
             List<Shipment> shipments = shipmentRepository.findByState(state);

@@ -1,12 +1,12 @@
 package eshop.prod.database.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import eshop.prod.database.entities.OrderItem;
-
-import java.util.List;
 
 @RepositoryRestResource
 public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
