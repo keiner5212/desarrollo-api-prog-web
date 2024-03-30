@@ -48,7 +48,7 @@ public class OrderItemController {
     }
 
     @GetMapping("/order-items/order/{id}")
-    public ResponseEntity<HashMap<String, Object>> getOrderItemsByOrderId(@PathVariable("id") Long id) {
+    public ResponseEntity<HashMap<String, Object>> getOrderItemsByOrder(@PathVariable("id") Long id) {
         log.info("Getting Order items by order id: " + id);
         HashMap<String, Object> response = new HashMap<>();
         List<OrderItemDTO> data = orderItemService.getOrderItemsByOrderId(id);
@@ -57,7 +57,7 @@ public class OrderItemController {
     }
 
     @GetMapping("/order-items/product/{id}")
-    public ResponseEntity<HashMap<String, Object>> getOrderItemsByProductId(@PathVariable("id") Long id) {
+    public ResponseEntity<HashMap<String, Object>> getOrderItemsByProduct(@PathVariable("id") Long id) {
         log.info("Getting Order items by product id: " + id);
         HashMap<String, Object> response = new HashMap<>();
         List<OrderItemDTO> data = orderItemService.getOrderItemsByProductId(id);
@@ -65,8 +65,8 @@ public class OrderItemController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/order-items/product/{id}")
-    public ResponseEntity<HashMap<String, Object>> getTotalSellByProductId(@PathVariable("id") Long id) {
+    @GetMapping("/order-items/product/{id}/total-sell")
+    public ResponseEntity<HashMap<String, Object>> getTotalSellByProduct(@PathVariable("id") Long id) {
         log.info("Getting total sell by product id: " + id);
         HashMap<String, Object> response = new HashMap<>();
         int data = orderItemService.getTotalSellByProductId(id);
