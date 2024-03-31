@@ -23,4 +23,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     /* retrieve orders with their items using JOIN fetch */
     @Query("SELECT o FROM Order o JOIN FETCH o.orderItems oi WHERE o.id_order = ?1")
     Order findByIdWithOrderItems(Long id);
+
+    /* Order by id customer */
+    @Query("SELECT o FROM Order o ORDER BY o.customer_id")
+    List<Order> findAllOrderByCustomerId(long id);
 }

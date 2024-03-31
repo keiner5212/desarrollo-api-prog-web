@@ -16,7 +16,7 @@ public interface ShipmentRepository extends JpaRepository<Shipment, Long> {
 
     /* Find shipping details for a carrier */
     @Query("SELECT s FROM Shipment s WHERE s.tracking_number LIKE %?1%")
-    List<Shipment> findByTrackingNumber(String trackingNumber);
+    List<Shipment> findByCarrier(String nameCarrier);
 
     /* Find shipping details by state */
     @Query("SELECT s FROM Shipment s WHERE s.order_id.state LIKE %?1%")

@@ -71,7 +71,7 @@ public class PaymentService {
     }
 
     // DELETE
-    public boolean deletePaymentDTO(long id) {
+    public boolean deletePayment(long id) {
         try {
             Payment payment = paymentRepository.findById(id).orElse(null);
             paymentRepository.delete(payment);

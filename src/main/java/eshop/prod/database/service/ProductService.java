@@ -57,7 +57,7 @@ public class ProductService {
     }
 
     // UPDATE
-    public ProductDTO updateProduct(ProductDTO productDTO) {
+    public ProductDTO updateProduct(ProductDTO productDTO, long id) {
         try {
             Product product = ProductMapper.INSTANCE.productDTOToProduct(productDTO);
             productRepository.save(product);

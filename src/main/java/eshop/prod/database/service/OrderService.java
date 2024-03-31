@@ -100,6 +100,17 @@ public class OrderService {
         return List.of();
     }
 
+    /* order by id CUSTOMER */
+    public List<OrderDTO> findAllOrderByCustomerId(long id) {
+        try {
+            List<Order> orders = orderRepository.findAllOrderByCustomerId(id);
+            return orders.stream().map(OrderMapper.INSTANCE::orderToOrderDTO).toList();
+        } catch (Exception e) {
+            log.error("Error getting orders by customer", e);
+        }
+        return List.of();
+    }
+
     /* Search orders by customer and a status */
     public List<OrderDTO> findByCustomerAndStatus(Customer customer, String status) {
         try {

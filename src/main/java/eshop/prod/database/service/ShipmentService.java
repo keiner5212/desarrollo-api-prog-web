@@ -72,7 +72,7 @@ public class ShipmentService {
     }
 
     // DELETE
-    public boolean deleteShipmentDTO(long id) {
+    public boolean deleteShipment(long id) {
         try {
             Shipment shipment = shipmentRepository.findById(id).orElse(null);
             shipmentRepository.delete(shipment);
@@ -97,9 +97,9 @@ public class ShipmentService {
     }
 
     // Find shipping details by tracking number
-    public List<ShipmentDTO> findByTrackingNumber(String trackingNumber) {
+    public List<ShipmentDTO> findBycarrier(String nameCarrier) {
         try {
-            List<Shipment> shipments = shipmentRepository.findByTrackingNumber(trackingNumber);
+            List<Shipment> shipments = shipmentRepository.findByCarrier(nameCarrier);
             return shipments.stream().map(ShipmentMapper.INSTANCE::shipmentToShipmentDTO).toList();
         } catch (Exception e) {
             log.error("Error getting shipment by tracking number", e);
