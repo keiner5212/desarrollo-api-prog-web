@@ -136,7 +136,7 @@ public class ProductService {
             if (price == null || stock == null) {
                 throw new IllegalArgumentException("Price and stock cannot be null");
             }
-            List<Product> products = productRepository.findByPriceLessThanAndStockGreaterThan(price, stock).orElse(null);
+            List<Product> products = productRepository.findByPriceAndStockLessThan(price, stock).orElse(null);
             if (products == null) {
                 throw new IllegalArgumentException("Products not found");
             }

@@ -21,5 +21,5 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     /* Search for products that do not exceed a certain price and stock */
     @Query("SELECT p FROM Product p WHERE p.price <= ?1 AND p.stock <= ?2")
-    Optional<List<Product>> findByPriceLessThanAndStockGreaterThan(double price, double stock);
+    Optional<List<Product>> findByPriceAndStockLessThan(double price, double stock);
 }
