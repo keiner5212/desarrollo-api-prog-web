@@ -117,7 +117,7 @@ public class CustomerService {
             Customer customerFromDB = customerRepository.findById(id)
                     .orElseThrow(() -> new IllegalArgumentException("Customer does not exist"));
             Customer customer = CustomerMapper.INSTANCE.customerDTOToCustomer(customerDTO);
-            customerFromDB.updateOnllyNecesary(customer);
+            customerFromDB.updateOnlyNecessary(customer);
             Customer savedCustomer = customerRepository.save(customerFromDB);
             return CustomerMapper.INSTANCE.customerToCustomerDTO(savedCustomer);
         } catch (Exception e) {

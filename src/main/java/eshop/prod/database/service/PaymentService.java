@@ -77,7 +77,7 @@ public class PaymentService {
             if (payment==null) {
                 throw new IllegalArgumentException("Payment cannot be null");
             }
-            paymentFromDB.updateOnllyNecesary(payment);
+            paymentFromDB.updateOnlyNecessary(payment);
             Payment savedPayment = paymentRepository.save(paymentFromDB);
             return PaymentMapper.INSTANCE.paymentToPaymentDTO(savedPayment);
         } catch (Exception e) {

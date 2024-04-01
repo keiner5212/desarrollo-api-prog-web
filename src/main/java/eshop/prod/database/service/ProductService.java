@@ -76,7 +76,7 @@ public class ProductService {
             if (product == null) {
                 throw new IllegalArgumentException("Product cannot be null");
             }
-            productFromDB.updateOnllyNecesary(product);
+            productFromDB.updateOnlyNecessary(product);
             Product savedProduct = productRepository.save(productFromDB);
             return ProductMapper.INSTANCE.productToProductDTO(savedProduct);
         } catch (Exception e) {

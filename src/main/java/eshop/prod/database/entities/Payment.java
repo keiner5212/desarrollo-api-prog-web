@@ -1,6 +1,5 @@
 package eshop.prod.database.entities;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -36,8 +35,8 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_payment;
 
-    @OneToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(referencedColumnName = "id_order")
+    @OneToOne
+    @JoinColumn(name = "order_id", referencedColumnName = "id_order")
     private Order order_id;
 
     @Column(nullable = false)
@@ -49,7 +48,7 @@ public class Payment {
     @Column(nullable = false)
     private String payment_method;
 
-    public void updateOnllyNecesary(Payment updated) {
+    public void updateOnlyNecessary(Payment updated) {
         if (updated.getOrder_id() != null) {
             this.setOrder_id(updated.getOrder_id());
         }

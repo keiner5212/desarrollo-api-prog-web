@@ -76,7 +76,7 @@ public class OrderService {
             if (order == null) {
                 throw new IllegalArgumentException("Order cannot be null");
             }
-            orderFromDB.updateOnllyNecesary(order);
+            orderFromDB.updateOnlyNecessary(order);
             Order savedOrder=orderRepository.save(orderFromDB);
             return OrderMapper.INSTANCE.orderToOrderDTO(savedOrder);
         } catch (Exception e) {

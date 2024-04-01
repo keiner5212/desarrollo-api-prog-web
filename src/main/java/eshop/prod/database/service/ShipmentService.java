@@ -80,7 +80,7 @@ public class ShipmentService {
             if (shipment == null) {
                 throw new IllegalArgumentException("Shipment cannot be null");
             }
-            shipmentFromDB.updateOnllyNecesary(shipment);
+            shipmentFromDB.updateOnlyNecessary(shipment);
             Shipment shipmentSaved = shipmentRepository.save(shipmentFromDB);
             return ShipmentMapper.INSTANCE.shipmentToShipmentDTO(shipmentSaved);
         } catch (Exception e) {

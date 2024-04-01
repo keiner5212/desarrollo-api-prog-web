@@ -17,7 +17,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Optional<List<Order>> findByDateBetween(Timestamp date1, Timestamp date2);
 
     /* Search orders by customer and a status */
-    @Query("SELECT o FROM Order o WHERE o.customer_id.id_customer = ?1 AND lower(o.status) = lower(?2)")
+    @Query("SELECT o FROM Order o JOIN FETCH o.customer_id c WHERE c.id_customer = ?1 AND lower(o.status) = lower(?2)")
     Optional<List<Order>> findByCustomerAndStatus(long customer, String status);
 
     /* retrieve orders with their items using JOIN fetch */
@@ -25,6 +25,6 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Optional<Order> findByIdWithOrderItems(long id);
 
     /* Order by id customer */
-    @Query("SELECT o FROM Order o WHERE o.customer_id.id_customer = ?1")
+    @Query("SELECT o FROM Order o JOIN FETCH o.customer_id c WHERE c.id_customer = ?1")
     Optional<List<Order>> findAllOrderByCustomerId(long id);
 }

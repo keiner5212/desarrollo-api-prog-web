@@ -39,7 +39,7 @@ public class Customer {
     @Column(nullable = false)
     private String address;
 
-    public void updateOnllyNecesary(Customer updated) {
+    public void updateOnlyNecessary(Customer updated) {
 
         if (updated.getName() != null) {
             this.setName(updated.getName());

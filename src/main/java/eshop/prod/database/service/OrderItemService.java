@@ -132,7 +132,7 @@ public class OrderItemService {
                     orderItemDTO,
                     orderRepository,
                     productRepository);
-            orderItemFromDB.updateOnllyNecesary(orderItem);
+            orderItemFromDB.updateOnlyNecessary(orderItem);
             OrderItem savedOrderItem = orderItemRepository.save(orderItemFromDB);
             return OrderItemMapper.INSTANCE.orderItemToOrderItemDTO(savedOrderItem);
         } catch (Exception e) {

@@ -50,7 +50,7 @@ public class Product {
     @Column(nullable = false)
     private Integer stock;
 
-    public void updateOnllyNecesary(Product updated) {
+    public void updateOnlyNecessary(Product updated) {
         if (updated.getName() != null) {
             this.setName(updated.getName());
         }

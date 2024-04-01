@@ -34,7 +34,7 @@ public class Shipment {
     private Long id_shipment;
 
     @OneToOne
-    @JoinColumn(referencedColumnName = "id_order")
+    @JoinColumn(name = "order_id", referencedColumnName = "id_order")
     private Order order_id;
 
     @Column(nullable = false)
@@ -46,7 +46,7 @@ public class Shipment {
     @Column(nullable = false)
     private String tracking_number;
 
-    public void updateOnllyNecesary( Shipment updated) {
+    public void updateOnlyNecessary( Shipment updated) {
         if (updated.getOrder_id() != null) {
             this.setOrder_id(updated.getOrder_id());
         }

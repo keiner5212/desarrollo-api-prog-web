@@ -1,6 +1,5 @@
 package eshop.prod.database.entities;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -34,8 +33,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_order;
 
-    @ManyToOne(cascade = CascadeType.REMOVE)
-    @JoinColumn(referencedColumnName = "id_customer")
+    @ManyToOne
+    @JoinColumn(name = "customer_id", referencedColumnName = "id_customer")
     private Customer customer_id;
 
     @Column(nullable = false)
@@ -44,8 +43,7 @@ public class Order {
     @Column(nullable = false)
     private String status;
 
-    public void updateOnllyNecesary(Order updated) {
-
+    public void updateOnlyNecessary(Order updated) {
         if (updated.getCustomer_id() != null) {
             this.setCustomer_id(updated.getCustomer_id());
         }
