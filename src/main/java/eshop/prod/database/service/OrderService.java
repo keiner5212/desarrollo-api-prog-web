@@ -7,7 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import eshop.prod.database.entities.Order;
+import eshop.prod.database.entities.OrderItem;
 import eshop.prod.database.entities.dto.OrderDTO;
+import eshop.prod.database.entities.dto.OrderItemDTO;
+import eshop.prod.database.entities.mappers.OrderItemMapper;
 import eshop.prod.database.entities.mappers.OrderMapper;
 import eshop.prod.database.repository.CustomerRepository;
 import eshop.prod.database.repository.OrderRepository;
@@ -149,19 +152,19 @@ public class OrderService {
     }
 
     /* retrieve orders with their items using JOIN fetch */
-    public OrderDTO findByIdWithOrderItems(Long id) {
+    public List<OrderItemDTO> findByIdWithOrderItems(Long id) {
         try {
             if (id == null) {
                 throw new IllegalArgumentException("Id cannot be null");
             }
-            Order order = orderRepository.findByIdWithOrderItems(id).orElse(null);
+            List<OrderItem> order = orderRepository.findByIdWithOrderItems(id).orElse(null);
             if (order == null) {
                 throw new IllegalArgumentException("Order not found");
             }
-            return OrderMapper.INSTANCE.orderToOrderDTO(order);
+            return order.stream().map(OrderItemMapper.INSTANCE::orderItemToOrderItemDTO).toList();
         } catch (Exception e) {
             log.error("Error getting order by id with order items", e);
         }
-        return null;
+        return List.of();
     }
 }

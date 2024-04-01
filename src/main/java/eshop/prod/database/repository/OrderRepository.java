@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 
 import eshop.prod.database.entities.Order;
+import eshop.prod.database.entities.OrderItem;
 
 @RepositoryRestResource
 public interface OrderRepository extends JpaRepository<Order, Long> {
@@ -22,7 +23,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     /* retrieve orders with their items using JOIN fetch */
     @Query("SELECT oi FROM OrderItem oi JOIN FETCH oi.order_id o WHERE o.id_order = ?1")
-    Optional<Order> findByIdWithOrderItems(long id);
+    Optional<List<OrderItem>> findByIdWithOrderItems(long id);
 
     /* Order by id customer */
     @Query("SELECT o FROM Order o JOIN FETCH o.customer_id c WHERE c.id_customer = ?1")
