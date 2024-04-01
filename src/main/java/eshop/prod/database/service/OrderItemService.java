@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import eshop.prod.database.entities.OrderItem;
+import eshop.prod.database.entities.Product;
 import eshop.prod.database.entities.dto.OrderItemDTO;
 import eshop.prod.database.entities.mappers.OrderItemMapper;
 import eshop.prod.database.repository.OrderItemRepository;
@@ -92,7 +93,7 @@ public class OrderItemService {
                 throw new IllegalArgumentException("Total sell cannot be null");
             }
             return res;
-            
+
         } catch (Exception e) {
             log.error("Error getting total sell by product id", e);
         }
@@ -112,6 +113,22 @@ public class OrderItemService {
             if (orderItem == null) {
                 throw new IllegalArgumentException("OrderItem cannot be null");
             }
+            int quantity = orderItem.getQuantity();
+            if (quantity <= 0) {
+                throw new IllegalArgumentException("Quantity must be greater than 0");
+            }
+            Product product = orderItem.getProduct_id();
+            if (product == null) {
+                throw new IllegalArgumentException("Product cannot be null");
+            }
+
+            if (quantity > product.getStock()) {
+                throw new IllegalArgumentException("Quantity cannot be greater than stock");
+            }
+
+            product.setStock(product.getStock() - quantity);
+            productRepository.save(product);
+
             OrderItem savedOrderItem = orderItemRepository.save(orderItem);
             return OrderItemMapper.INSTANCE.orderItemToOrderItemDTO(savedOrderItem);
         } catch (Exception e) {
@@ -132,6 +149,24 @@ public class OrderItemService {
                     orderItemDTO,
                     orderRepository,
                     productRepository);
+
+            int quantityBefore = orderItemFromDB.getQuantity();
+            int quantity = orderItem.getQuantity();
+            if (quantity <= 0) {
+                throw new IllegalArgumentException("Quantity must be greater than 0");
+            }
+            Product product = orderItem.getProduct_id();
+            if (product == null) {
+                throw new IllegalArgumentException("Product cannot be null");
+            }
+
+            int deltaQuantity = (quantityBefore - quantity);
+            if (deltaQuantity < 0 && (deltaQuantity + product.getStock()) < 0) { // not enough stock
+                    throw new IllegalArgumentException("Quantity cannot be greater than stock");
+            }
+            product.setStock(product.getStock() + deltaQuantity);
+            productRepository.save(product);
+
             orderItemFromDB.updateOnlyNecessary(orderItem);
             OrderItem savedOrderItem = orderItemRepository.save(orderItemFromDB);
             return OrderItemMapper.INSTANCE.orderItemToOrderItemDTO(savedOrderItem);

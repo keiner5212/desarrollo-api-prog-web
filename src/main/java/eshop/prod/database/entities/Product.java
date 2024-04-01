@@ -51,22 +51,22 @@ public class Product {
     private Integer stock;
 
     public void updateOnlyNecessary(Product updated) {
-        if (updated.getName() != null) {
+        if (updated.getName() != null && this.getName() != updated.getName()) {
             this.setName(updated.getName());
         }
-        if (updated.getPrice() != null) {
+        if (updated.getPrice() != null && this.getPrice() != updated.getPrice()) {
             this.setPrice(updated.getPrice());
         }
-        if (updated.getDescription() != null) {
+        if (updated.getDescription() != null && this.getDescription() != updated.getDescription()) {
             this.setDescription(updated.getDescription());
         }
-        if (updated.getBrand() != null) {
+        if (updated.getBrand() != null && this.getBrand() != updated.getBrand()) {
             this.setBrand(updated.getBrand());
         }
-        if (updated.getImage() != null) {
+        if (updated.getImage() != null && this.getImage() != updated.getImage()) {
             this.setImage(updated.getImage());
         }
-        if (updated.getStock() != null) {
+        if (updated.getStock() != null && this.getStock() != updated.getStock()) {
             this.setStock(updated.getStock());
         }
     }

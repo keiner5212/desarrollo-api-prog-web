@@ -44,13 +44,13 @@ public class Order {
     private String status;
 
     public void updateOnlyNecessary(Order updated) {
-        if (updated.getCustomer_id() != null) {
+        if (updated.getCustomer_id() != null && this.getCustomer_id() != updated.getCustomer_id()) {
             this.setCustomer_id(updated.getCustomer_id());
         }
-        if (updated.getOrder_date() != null) {
+        if (updated.getOrder_date() != null && this.getOrder_date() != updated.getOrder_date()) {
             this.setOrder_date(updated.getOrder_date());
         }
-        if (updated.getStatus() != null) {
+        if (updated.getStatus() != null && this.getStatus() != updated.getStatus()) {
             this.setStatus(updated.getStatus());
         }
     }

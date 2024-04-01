@@ -47,16 +47,16 @@ public class Shipment {
     private String tracking_number;
 
     public void updateOnlyNecessary( Shipment updated) {
-        if (updated.getOrder_id() != null) {
+        if (updated.getOrder_id() != null && this.getOrder_id() != updated.getOrder_id()) {
             this.setOrder_id(updated.getOrder_id());
         }
-        if (updated.getAddress() != null) {
+        if (updated.getAddress() != null && this.getAddress() != updated.getAddress()) {
             this.setAddress(updated.getAddress());
         }
-        if (updated.getCarrier() != null) {
+        if (updated.getCarrier() != null && this.getCarrier() != updated.getCarrier()) {
             this.setCarrier(updated.getCarrier());
         }
-        if (updated.getTracking_number() != null) {
+        if (updated.getTracking_number() != null && this.getTracking_number() != updated.getTracking_number()) {
             this.setTracking_number(updated.getTracking_number());
         }
     }

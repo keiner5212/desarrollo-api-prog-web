@@ -41,13 +41,13 @@ public class Customer {
 
     public void updateOnlyNecessary(Customer updated) {
 
-        if (updated.getName() != null) {
+        if (updated.getName() != null && this.getName() != updated.getName()) {
             this.setName(updated.getName());
         }
-        if (updated.getEmail() != null) {
+        if (updated.getEmail() != null && this.getEmail() != updated.getEmail()) {
             this.setEmail(updated.getEmail()); 
         }
-        if (updated.getAddress() != null) {
+        if (updated.getAddress() != null && this.getAddress() != updated.getAddress()) {
             this.setAddress(updated.getAddress()); 
         }
     }

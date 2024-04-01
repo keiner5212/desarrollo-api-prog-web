@@ -49,16 +49,16 @@ public class Payment {
     private String payment_method;
 
     public void updateOnlyNecessary(Payment updated) {
-        if (updated.getOrder_id() != null) {
+        if (updated.getOrder_id() != null && this.getOrder_id() != updated.getOrder_id()) {
             this.setOrder_id(updated.getOrder_id());
         }
-        if (updated.getAmount() != null) {
+        if (updated.getAmount() != null && this.getAmount() != updated.getAmount()) {
             this.setAmount(updated.getAmount());
         }
-        if (updated.getPayment_date() != null) {
+        if (updated.getPayment_date() != null && this.getPayment_date() != updated.getPayment_date()) {
             this.setPayment_date(updated.getPayment_date());
         }
-        if (updated.getPayment_method() != null) {
+        if (updated.getPayment_method() != null && this.getPayment_method() != updated.getPayment_method()) {
             this.setPayment_method(updated.getPayment_method());
         }
     }

@@ -48,16 +48,16 @@ public class OrderItem {
     private Double unit_price;
 
     public void updateOnlyNecessary(OrderItem updated) {
-        if (updated.getOrder_id() != null) {
+        if (updated.getOrder_id() != null && this.getOrder_id() != updated.getOrder_id()) {
             this.setOrder_id(updated.getOrder_id());
         }
-        if (updated.getProduct_id() != null) {
+        if (updated.getProduct_id() != null && this.getProduct_id() != updated.getProduct_id()) {
             this.setProduct_id(updated.getProduct_id());
         }
-        if (updated.getQuantity() != null) {
+        if (updated.getQuantity() != null && this.getQuantity() != updated.getQuantity()) {
             this.setQuantity(updated.getQuantity());
         }
-        if (updated.getUnit_price() != null) {
+        if (updated.getUnit_price() != null && this.getUnit_price() != updated.getUnit_price()) {
             this.setUnit_price(updated.getUnit_price());
         }
     }
