@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import eshop.prod.database.entities.dto.CustomerDTO;
@@ -20,11 +21,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
+@RequestMapping("/api/v1/customers")
 public class CustomerController {
     @Autowired
     CustomerService customerService;
 
-    @GetMapping("/customers")
+    @GetMapping("")
     public ResponseEntity<HashMap<String, Object>> getCustomers() {
         log.info("Getting all customers");
         HashMap<String, Object> response = new HashMap<>();
@@ -33,7 +35,7 @@ public class CustomerController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/customers/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<HashMap<String, Object>> getCustomerById(@PathVariable("id") Long id) {
         log.info("Getting customer by id: " + id);
         HashMap<String, Object> response = new HashMap<>();
@@ -46,7 +48,7 @@ public class CustomerController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/customers/email/{email}")
+    @GetMapping("/email/{email}")
     public ResponseEntity<HashMap<String, Object>> getCustomerByEmail(@PathVariable("email") String email) {
         log.info("Getting customer by email: " + email);
         HashMap<String, Object> response = new HashMap<>();
@@ -59,7 +61,7 @@ public class CustomerController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/customers/address/{address}")
+    @GetMapping("/address/{address}")
     public ResponseEntity<HashMap<String, Object>> getCustomerByAddress(@PathVariable("address") String address) {
         log.info("Getting customer by address: " + address);
         HashMap<String, Object> response = new HashMap<>();
@@ -68,7 +70,7 @@ public class CustomerController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/customers/name/{name}")
+    @GetMapping("/name/{name}")
     public ResponseEntity<HashMap<String, Object>> getCustomerByName(@PathVariable("name") String name) {
         log.info("Getting customer by name: " + name);
         HashMap<String, Object> response = new HashMap<>();
@@ -77,7 +79,7 @@ public class CustomerController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/customers")
+    @PostMapping("")
     public ResponseEntity<HashMap<String, Object>> createCustomer(@RequestBody CustomerDTO customerDTO) {
         log.info("Creating customer: " + customerDTO);
         HashMap<String, Object> response = new HashMap<>();
@@ -86,7 +88,7 @@ public class CustomerController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping("/customers/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<HashMap<String, Object>> updateCustomer(@PathVariable("id") Long id,
             @RequestBody CustomerDTO customerDTO) {
         log.info("Updating customer: " + customerDTO);
@@ -100,7 +102,7 @@ public class CustomerController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/customers/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<HashMap<String, Object>> deleteCustomer(@PathVariable("id") Long id) {
         log.info("Deleting customer with id: " + id);
         HashMap<String, Object> response = new HashMap<>();

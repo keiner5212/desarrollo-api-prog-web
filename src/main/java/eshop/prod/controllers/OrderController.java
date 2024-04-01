@@ -13,21 +13,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import eshop.prod.database.entities.Customer;
 import eshop.prod.database.entities.dto.OrderDTO;
-import eshop.prod.database.repository.CustomerRepository;
 import eshop.prod.database.service.OrderService;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
+@RequestMapping("/api/v1/orders")
 public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @GetMapping("/orders") // GET ALL
+    @GetMapping("") // GET ALL
     public ResponseEntity<HashMap<String, Object>> getOrders() {
         log.info("Getting all orders");
         HashMap<String, Object> response = new HashMap<>();
@@ -36,7 +37,7 @@ public class OrderController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/orders/{id}") // get ID
+    @GetMapping("/{id}") // get ID
     public ResponseEntity<HashMap<String, Object>> getOrderById(@PathVariable("id") Long id) {
         log.info("Getting order by id: " + id);
         HashMap<String, Object> response = new HashMap<>();
@@ -49,7 +50,7 @@ public class OrderController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/orders/{customer_id}") // GET PEDIDO POR CLIENTE ID
+    @GetMapping("/{customer_id}") // GET PEDIDO POR CLIENTE ID
     public ResponseEntity<HashMap<String, Object>> getOrdersByCustomer(@PathVariable("customer_id") Long customer_id) {
         log.info("Getting orders by customer id: " + customer_id);
         HashMap<String, Object> response = new HashMap<>();
@@ -58,45 +59,46 @@ public class OrderController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/orders") // GET PEDIDOS por fecha
-    public ResponseEntity<HashMap<String, Object>> getByDate(@PathVariable("order1") Timestamp order1,
-            @PathVariable("order2") Timestamp order2) {
+    @GetMapping("/date-range") // GET PEDIDOS por fecha
+    public ResponseEntity<HashMap<String, Object>> getByDate(
+            @RequestParam("startDate") Timestamp startDate, // "yyyy-MM-dd 23:59:59"
+            @RequestParam("endDate") Timestamp endDate // "yyyy-MM-dd hh:mm:ss"
+    ) {
         HashMap<String, Object> response = new HashMap<>();
-        List<OrderDTO> data = orderService.findByDate(order1, order2);
+        List<OrderDTO> data = orderService.findByDate(startDate, endDate);
         response.put("data", data);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/orders/Customer{id}/status/{status}") // GET PEDIDOS por estado
-    public ResponseEntity<HashMap<String, Object>> getByStatus(@PathVariable("id") Customer customer,
+    @GetMapping("/customer/{id}/status/{status}") // GET PEDIDOS por estado
+    public ResponseEntity<HashMap<String, Object>> getByStatus(@PathVariable("id") Long id,
             @PathVariable("status") String status) {
         HashMap<String, Object> response = new HashMap<>();
-        List<OrderDTO> data = orderService.findByCustomerAndStatus(customer, status);
+        List<OrderDTO> data = orderService.findByCustomerAndStatus(id, status);
         response.put("data", data);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/orders") // POST
-    public ResponseEntity<HashMap<String, Object>> createOrder(@RequestBody OrderDTO orderDTO,
-            CustomerRepository customerRepository) {
+    @PostMapping("") // POST
+    public ResponseEntity<HashMap<String, Object>> createOrder(@RequestBody OrderDTO orderDTO) {
         log.info("Creating order");
         HashMap<String, Object> response = new HashMap<>();
-        OrderDTO data = orderService.createOrder(orderDTO, customerRepository);
+        OrderDTO data = orderService.createOrder(orderDTO);
         response.put("data", data);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping("/orders/{id}") // PUT
+    @PutMapping("/{id}") // PUT
     public ResponseEntity<HashMap<String, Object>> updateOrder(
-            @PathVariable("id") CustomerRepository customerRepository, @RequestBody OrderDTO orderDTO) {
+            @PathVariable("id") Long id, @RequestBody OrderDTO orderDTO) {
         log.info("Updating order");
         HashMap<String, Object> response = new HashMap<>();
-        OrderDTO data = orderService.updateOrder(orderDTO, customerRepository);
+        OrderDTO data = orderService.updateOrder(id, orderDTO);
         response.put("data", data);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/orders/{id}") // DELETE
+    @DeleteMapping("/{id}") // DELETE
     public ResponseEntity<HashMap<String, Object>> deleteOrder(@PathVariable("id") Long id) {
         log.info("Deleting order");
         HashMap<String, Object> response = new HashMap<>();

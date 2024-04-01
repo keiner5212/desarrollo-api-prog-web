@@ -42,6 +42,9 @@ public class OrderItemService {
     /** get OrderItem by id */
     public OrderItemDTO getOrderItemById(Long id) {
         try {
+            if (id == null) {
+                throw new IllegalArgumentException("Id cannot be null");
+            }
             OrderItem orderItem = orderItemRepository.findById(id).orElse(null);
             return OrderItemMapper.INSTANCE.orderItemToOrderItemDTO(orderItem);
         } catch (Exception e) {
@@ -54,7 +57,10 @@ public class OrderItemService {
     /** get OrderItem by order id */
     public List<OrderItemDTO> getOrderItemsByOrderId(Long id) {
         try {
-            List<OrderItem> orderItems = orderItemRepository.findByOrderId(id);
+            List<OrderItem> orderItems = orderItemRepository.findByOrderId(id).orElse(null);
+            if (orderItems == null) {
+                throw new IllegalArgumentException("OrderItems cannot be null");
+            }
             return orderItems.stream().map(OrderItemMapper.INSTANCE::orderItemToOrderItemDTO).toList();
         } catch (Exception e) {
             log.error("Error getting OrderItems by order id", e);
@@ -66,7 +72,10 @@ public class OrderItemService {
     /** get OrderItem by product id */
     public List<OrderItemDTO> getOrderItemsByProductId(Long id) {
         try {
-            List<OrderItem> orderItems = orderItemRepository.findByProductId(id);
+            List<OrderItem> orderItems = orderItemRepository.findByProductId(id).orElse(null);
+            if (orderItems == null) {
+                throw new IllegalArgumentException("OrderItems cannot be null");
+            }
             return orderItems.stream().map(OrderItemMapper.INSTANCE::orderItemToOrderItemDTO).toList();
         } catch (Exception e) {
             log.error("Error getting OrderItems by product id", e);
@@ -78,7 +87,12 @@ public class OrderItemService {
     /** get total sell by product id */
     public Integer getTotalSellByProductId(Long id) {
         try {
-            return orderItemRepository.findTotalSellByProductId(id);
+            Integer res = orderItemRepository.findTotalSellByProductId(id).orElse(null);
+            if (res == null) {
+                throw new IllegalArgumentException("Total sell cannot be null");
+            }
+            return res;
+            
         } catch (Exception e) {
             log.error("Error getting total sell by product id", e);
         }
@@ -95,6 +109,9 @@ public class OrderItemService {
                     orderItemDTO,
                     orderRepository,
                     productRepository);
+            if (orderItem == null) {
+                throw new IllegalArgumentException("OrderItem cannot be null");
+            }
             OrderItem savedOrderItem = orderItemRepository.save(orderItem);
             return OrderItemMapper.INSTANCE.orderItemToOrderItemDTO(savedOrderItem);
         } catch (Exception e) {
@@ -106,13 +123,16 @@ public class OrderItemService {
     /** update OrderItem */
     public OrderItemDTO updateOrderItem(Long id, OrderItemDTO orderItemDTO) {
         try {
+            if (id == null) {
+                throw new IllegalArgumentException("Id cannot be null");
+            }
             OrderItem orderItemFromDB = orderItemRepository.findById(id)
                     .orElseThrow(() -> new IllegalArgumentException("OrderItem does not exist"));
             OrderItem orderItem = OrderItemMapper.INSTANCE.orderItemDTOToOrderItem(
                     orderItemDTO,
                     orderRepository,
                     productRepository);
-            orderItemFromDB = orderItemFromDB.updateOnllyNecesary(orderItemFromDB, orderItem);
+            orderItemFromDB.updateOnllyNecesary(orderItem);
             OrderItem savedOrderItem = orderItemRepository.save(orderItemFromDB);
             return OrderItemMapper.INSTANCE.orderItemToOrderItemDTO(savedOrderItem);
         } catch (Exception e) {
@@ -124,6 +144,9 @@ public class OrderItemService {
     /** delete OrderItem */
     public boolean deleteOrderItem(Long id) {
         try {
+            if (id == null) {
+                throw new IllegalArgumentException("Id cannot be null");
+            }
             orderItemRepository.deleteById(id);
             return true;
         } catch (Exception e) {

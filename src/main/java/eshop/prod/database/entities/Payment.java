@@ -1,12 +1,13 @@
 package eshop.prod.database.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,7 +36,7 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_payment;
 
-    @ManyToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(referencedColumnName = "id_order")
     private Order order_id;
 
@@ -47,4 +48,19 @@ public class Payment {
 
     @Column(nullable = false)
     private String payment_method;
+
+    public void updateOnllyNecesary(Payment updated) {
+        if (updated.getOrder_id() != null) {
+            this.setOrder_id(updated.getOrder_id());
+        }
+        if (updated.getAmount() != null) {
+            this.setAmount(updated.getAmount());
+        }
+        if (updated.getPayment_date() != null) {
+            this.setPayment_date(updated.getPayment_date());
+        }
+        if (updated.getPayment_method() != null) {
+            this.setPayment_method(updated.getPayment_method());
+        }
+    }
 }

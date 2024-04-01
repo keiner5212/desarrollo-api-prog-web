@@ -24,7 +24,8 @@ public interface PaymentMapper {
 
         Payment res = new Payment();
         res.setId_payment(paymentDTO.getId_payment());
-        res.setOrder_id(orderRepository.findById(paymentDTO.getOrder_id()).orElseThrow(
+        long id=paymentDTO.getOrder_id();
+        res.setOrder_id(orderRepository.findById(id).orElseThrow(
             () -> new IllegalArgumentException("Order not found with id: " + paymentDTO.getOrder_id())
         ));
         res.setAmount(paymentDTO.getAmount());

@@ -6,7 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -33,7 +33,7 @@ public class Shipment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_shipment;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(referencedColumnName = "id_order")
     private Order order_id;
 
@@ -45,4 +45,19 @@ public class Shipment {
 
     @Column(nullable = false)
     private String tracking_number;
+
+    public void updateOnllyNecesary( Shipment updated) {
+        if (updated.getOrder_id() != null) {
+            this.setOrder_id(updated.getOrder_id());
+        }
+        if (updated.getAddress() != null) {
+            this.setAddress(updated.getAddress());
+        }
+        if (updated.getCarrier() != null) {
+            this.setCarrier(updated.getCarrier());
+        }
+        if (updated.getTracking_number() != null) {
+            this.setTracking_number(updated.getTracking_number());
+        }
+    }
 }

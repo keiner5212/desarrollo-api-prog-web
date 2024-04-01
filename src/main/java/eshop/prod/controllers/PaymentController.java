@@ -13,20 +13,22 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import eshop.prod.database.entities.dto.PaymentDTO;
-import eshop.prod.database.repository.OrderRepository;
 import eshop.prod.database.service.PaymentService;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
+@RequestMapping("/api/v1/payments")
 public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
-    @GetMapping("/payments") // get all
+    @GetMapping("") // get all
     public ResponseEntity<HashMap<String, Object>> getPayments() {
         log.info("Getting all payment items");
         HashMap<String, Object> response = new HashMap<>();
@@ -35,7 +37,7 @@ public class PaymentController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/payments/{id}") // get id
+    @GetMapping("/{id}") // get id
     public ResponseEntity<HashMap<String, Object>> getPaymentById(@PathVariable("id") Long id) {
         log.info("Getting payment item by id: " + id);
         PaymentDTO data = paymentService.getPaymentById(id);
@@ -47,11 +49,11 @@ public class PaymentController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/payments/order/{id}") // get orderID
+    @GetMapping("/order/{id}/payment-method/{paymentMethod}") // get orderID
     public ResponseEntity<HashMap<String, Object>> getPaymentByOrderId(@PathVariable("id") Long id,
             @PathVariable("paymentMethod") String paymentMethod) {
         log.info("Getting payment item by order id: " + id);
-        List<PaymentDTO> data = paymentService.findByOrderIdAndPaymentMethod(id, paymentMethod);
+        PaymentDTO data = paymentService.findByOrderIdAndPaymentMethod(id, paymentMethod);
         HashMap<String, Object> response = new HashMap<>();
         if (data == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -60,11 +62,13 @@ public class PaymentController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/payments/date/{date}") // get date
-    public ResponseEntity<HashMap<String, Object>> getPaymentByDate(@PathVariable("date") Timestamp date1,
-            Timestamp date2) {
-        log.info("Getting payment item by date[" + date1 + "," + date2 + "]");
-        List<PaymentDTO> data = paymentService.findByDate(date1, date2);
+    @GetMapping("/date-range") // get date
+    public ResponseEntity<HashMap<String, Object>> getPaymentByDate(
+            @RequestParam("startDate") Timestamp startDate, // "yyyy-MM-dd 23:59:59"
+            @RequestParam("endDate") Timestamp endDate // "yyyy-MM-dd hh:mm:ss"
+    ) {
+        log.info("Getting payment item by date[" + startDate.toString() + "," + endDate.toString() + "]");
+        List<PaymentDTO> data = paymentService.findByDate(startDate, endDate);
         HashMap<String, Object> response = new HashMap<>();
         response.put("data", data);
         if (data == null) {
@@ -73,22 +77,21 @@ public class PaymentController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/payments") // create
-    public ResponseEntity<HashMap<String, Object>> createPayment(@RequestBody PaymentDTO paymentDTO,
-            OrderRepository orderRepository) {
+    @PostMapping("") // create
+    public ResponseEntity<HashMap<String, Object>> createPayment(@RequestBody PaymentDTO paymentDTO) {
         log.info("Creating payment: " + paymentDTO);
         HashMap<String, Object> response = new HashMap<>();
-        PaymentDTO data = paymentService.createPayment(paymentDTO, orderRepository);
+        PaymentDTO data = paymentService.createPayment(paymentDTO);
         response.put("data", data);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PutMapping("/payments/{id}") // update
-    public ResponseEntity<HashMap<String, Object>> updatePayment(@PathVariable("id") OrderRepository orderRepository,
+    @PutMapping("/{id}") // update
+    public ResponseEntity<HashMap<String, Object>> updatePayment(@PathVariable("id") Long id,
             @RequestBody PaymentDTO paymentDTO) {
         log.info("Updating payment item: " + paymentDTO.getId_payment());
         HashMap<String, Object> response = new HashMap<>();
-        PaymentDTO data = paymentService.updatePayment(paymentDTO, orderRepository);
+        PaymentDTO data = paymentService.updatePayment(id, paymentDTO);
         if (data == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -96,7 +99,7 @@ public class PaymentController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/payments/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<HashMap<String, Object>> deletePayment(@PathVariable("id") Long id) {
         log.info("Deleting payment item with id: " + id);
         HashMap<String, Object> response = new HashMap<>();

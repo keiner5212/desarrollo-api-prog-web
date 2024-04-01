@@ -24,7 +24,8 @@ public interface ShipmentMapper {
 
         Shipment res = new Shipment();
         res.setId_shipment(shipmentDTO.getId_shipment());
-        res.setOrder_id(orderRepository.findById(shipmentDTO.getOrder_id()).orElseThrow(
+        long id=shipmentDTO.getOrder_id();
+        res.setOrder_id(orderRepository.findById(id).orElseThrow(
             () -> new IllegalArgumentException("Order not found with id: " + shipmentDTO.getOrder_id())
         ));
         res.setAddress(shipmentDTO.getAddress());

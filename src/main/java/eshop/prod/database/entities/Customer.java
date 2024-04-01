@@ -39,25 +39,17 @@ public class Customer {
     @Column(nullable = false)
     private String address;
 
-    /**
-     * Update only the fields that are not null
-     * @param original
-     * @param updated
-     * @return
-     */
-    public Customer updateOnllyNecesary(Customer original, Customer updated) {
+    public void updateOnllyNecesary(Customer updated) {
 
         if (updated.getName() != null) {
-            original.setName(updated.getName());
+            this.setName(updated.getName());
         }
         if (updated.getEmail() != null) {
-            original.setEmail(updated.getEmail()); 
+            this.setEmail(updated.getEmail()); 
         }
         if (updated.getAddress() != null) {
-            original.setAddress(updated.getAddress()); 
+            this.setAddress(updated.getAddress()); 
         }
-
-        return original;
     }
     
 }

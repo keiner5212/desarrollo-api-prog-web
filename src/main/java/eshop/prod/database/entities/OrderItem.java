@@ -1,5 +1,6 @@
 package eshop.prod.database.entities;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -33,11 +34,11 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_order_item;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(referencedColumnName = "id_order")
     private Order order_id;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(referencedColumnName = "id_product")
     private Product product_id;
     
@@ -47,24 +48,18 @@ public class OrderItem {
     @Column(nullable = false)
     private Double unit_price;
 
-    /** Update only the fields that are not null
-     * @param original
-     * @param updated
-     * @return
-     */
-    public OrderItem updateOnllyNecesary(OrderItem original, OrderItem updated) {
+    public void updateOnllyNecesary(OrderItem updated) {
         if (updated.getOrder_id() != null) {
-            original.setOrder_id(updated.getOrder_id());
+            this.setOrder_id(updated.getOrder_id());
         }
         if (updated.getProduct_id() != null) {
-            original.setProduct_id(updated.getProduct_id());
+            this.setProduct_id(updated.getProduct_id());
         }
         if (updated.getQuantity() != null) {
-            original.setQuantity(updated.getQuantity());
+            this.setQuantity(updated.getQuantity());
         }
         if (updated.getUnit_price() != null) {
-            original.setUnit_price(updated.getUnit_price());
+            this.setUnit_price(updated.getUnit_price());
         }
-        return original;
     }
 }

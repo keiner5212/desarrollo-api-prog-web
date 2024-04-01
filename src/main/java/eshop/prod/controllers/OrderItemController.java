@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import eshop.prod.database.entities.dto.OrderItemDTO;
@@ -20,11 +21,12 @@ import lombok.extern.slf4j.Slf4j;
 
 @RestController
 @Slf4j
+@RequestMapping("/api/v1/order-items")
 public class OrderItemController {
     @Autowired
     private OrderItemService orderItemService;
 
-    @GetMapping("/order-items")
+    @GetMapping("")
     public ResponseEntity<HashMap<String, Object>> getOrderItems() {
         log.info("Getting all order items");
         HashMap<String, Object> response = new HashMap<>();
@@ -33,7 +35,7 @@ public class OrderItemController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/order-items/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<HashMap<String, Object>> getOrderItemById(@PathVariable("id") Long id) {
         log.info("Getting Order item by id: " + id);
         HashMap<String, Object> response = new HashMap<>();
@@ -46,7 +48,7 @@ public class OrderItemController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/order-items/order/{id}")
+    @GetMapping("/order/{id}")
     public ResponseEntity<HashMap<String, Object>> getOrderItemsByOrder(@PathVariable("id") Long id) {
         log.info("Getting Order items by order id: " + id);
         HashMap<String, Object> response = new HashMap<>();
@@ -55,7 +57,7 @@ public class OrderItemController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/order-items/product/{id}")
+    @GetMapping("/product/{id}")
     public ResponseEntity<HashMap<String, Object>> getOrderItemsByProduct(@PathVariable("id") Long id) {
         log.info("Getting Order items by product id: " + id);
         HashMap<String, Object> response = new HashMap<>();
@@ -64,7 +66,7 @@ public class OrderItemController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/order-items/product/{id}/total-sell")
+    @GetMapping("/product/{id}/total-sell")
     public ResponseEntity<HashMap<String, Object>> getTotalSellByProduct(@PathVariable("id") Long id) {
         log.info("Getting total sell by product id: " + id);
         HashMap<String, Object> response = new HashMap<>();
@@ -73,7 +75,7 @@ public class OrderItemController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @PostMapping("/order-items")
+    @PostMapping("")
     public ResponseEntity<HashMap<String, Object>> createOrderItem(@RequestBody OrderItemDTO orderItemDTO) {
         log.info("Creating order item: " + orderItemDTO);
         HashMap<String, Object> response = new HashMap<>();
@@ -82,7 +84,7 @@ public class OrderItemController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
-    @PutMapping("/order-items/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<HashMap<String, Object>> updateOrderItem(@PathVariable("id") Long id,
             @RequestBody OrderItemDTO orderItemDTO) {
         log.info("Updating order item: " + orderItemDTO);
@@ -96,7 +98,7 @@ public class OrderItemController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/order-items/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<HashMap<String, Object>> deleteOrderItem(@PathVariable("id") Long id) {
         log.info("Deleting order item with id: " + id);
         HashMap<String, Object> response = new HashMap<>();

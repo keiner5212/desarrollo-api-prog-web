@@ -15,4 +15,11 @@ public class MainController {
         response.put("message", "Hello World!");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
+    @GetMapping("/api/v1")
+    public ResponseEntity<HashMap<String, Object>> index2() {
+        HashMap<String, Object> response = new HashMap<>();
+        response.put("message", "Welcome to our API!");
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 }
