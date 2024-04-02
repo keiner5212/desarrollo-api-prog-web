@@ -19,76 +19,69 @@ import org.mockito.quality.Strictness;
 
 import eshop.prod.database.entities.Customer;
 import eshop.prod.database.entities.Order;
-import eshop.prod.database.entities.Payment;
-import eshop.prod.database.entities.dto.PaymentDTO;
-import eshop.prod.database.entities.mappers.PaymentMapper;
+import eshop.prod.database.entities.dto.OrderDTO;
+import eshop.prod.database.entities.mappers.OrderMapper;
 import eshop.prod.database.repository.CustomerRepository;
 import eshop.prod.database.repository.OrderRepository;
-import eshop.prod.database.repository.PaymentRepository;
 
 @SuppressWarnings("null")
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
-class PaymentServiceTest {
-
+class OrderServiceTest {
+    
     @Mock
     private OrderRepository orderRepository;
 
     @Mock
     private CustomerRepository customerRepository;
-
-    @Mock
-    private PaymentRepository paymentRepository;
-
-    @InjectMocks
-    private PaymentService paymentService;
-
     
+    @InjectMocks
+    private OrderService orderService;
+
     Customer customer=Customer.builder()
             .id_customer(1L)
             .name("customer1")
             .email("email1")
             .address("address1")
             .build();
-    Order order=Order.builder()
-            .id_order(1L)
+    Order order1=Order.builder()
+            .customer_id(customer)
+            .order_date(new Timestamp(System.currentTimeMillis() + 10000))
+            .status("PENDIENTE")
+            .build();
+    Order orderres=Order.builder()
+            .id_order(2L)
             .customer_id(customer)
             .order_date(new Timestamp(System.currentTimeMillis() + 10000))
             .status("PENDIENTE")
             .build();
 
-    Payment payment=Payment.builder()
-            .order_id(order)
-            .amount(10.0)
-            .payment_date(new Timestamp(System.currentTimeMillis() + 10000))
-            .payment_method("PAYPAL")
-            .build();
-
-    Payment paymentRes=Payment.builder()
-            .id_payment(1L)
-            .order_id(order)
-            .amount(10.0)
-            .payment_date(new Timestamp(System.currentTimeMillis() + 10000))
-            .payment_method("PAYPAL")
-            .build();
-
-    PaymentDTO paymentDTO=PaymentMapper.INSTANCE.paymentToPaymentDTO(payment);
+    OrderDTO orderDTO=OrderMapper.INSTANCE.orderToOrderDTO(order1);
 
     @BeforeEach
     void setUpBeforeClass() {
-        when(paymentRepository.save(Mockito.any(Payment.class))).thenReturn(paymentRes);
-        when(paymentRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(paymentRes));
-        when(orderRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(order));
+        when(orderRepository.save(Mockito.any(Order.class))).thenReturn(orderres);
+        when(orderRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(orderres));
         when(customerRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(customer));
     }
-
+            
     @Test
-    void testCreatePayment() {
+    void testCreateOrder() {
 
     }
 
     @Test
-    void testDeletePayment() {
+    void testDeleteOrder() {
+
+    }
+
+    @Test
+    void testFindAllOrderByCustomerId() {
+
+    }
+
+    @Test
+    void testFindByCustomerAndStatus() {
 
     }
 
@@ -98,22 +91,22 @@ class PaymentServiceTest {
     }
 
     @Test
-    void testFindByOrderIdAndPaymentMethod() {
+    void testFindByIdWithOrderItems() {
 
     }
 
     @Test
-    void testGetAllPayments() {
+    void testGetAllOrders() {
 
     }
 
     @Test
-    void testGetPaymentById() {
+    void testGetOrderById() {
 
     }
 
     @Test
-    void testUpdatePayment() {
+    void testUpdateOrder() {
 
     }
 }

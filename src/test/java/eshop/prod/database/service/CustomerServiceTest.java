@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
+import java.util.Optional;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -49,13 +49,7 @@ class CustomerServiceTest {
     void setUpBeforeClass() {
         when(customerRepository.save(Mockito.any(Customer.class))).thenReturn(customerRes);
         when(customerRepository.findAll()).thenReturn(List.of(customerRes));
-        when(customerRepository.findById(Mockito.anyLong())).thenReturn(java.util.Optional.ofNullable(customerRes));
-    }
-
-    @AfterEach
-    void setUp() {
-        customerRepository.flush();
-        customerRepository.deleteAll();
+        when(customerRepository.findById(Mockito.anyLong())).thenReturn(Optional.ofNullable(customerRes));
     }
 
     @Test
@@ -87,7 +81,7 @@ class CustomerServiceTest {
     @Test
     void testGetCustomerByAddress() {
         when(customerRepository.findByAddress(Mockito.anyString()))
-                .thenReturn(java.util.Optional.ofNullable(List.of(customerRes)));
+                .thenReturn(Optional.ofNullable(List.of(customerRes)));
         customerService.createCustomer(customerDTO);
         when(customerRepository.count()).thenReturn(1L);
         assertEquals(1, customerService.getCustomerByAddress("address1").size());
@@ -96,7 +90,7 @@ class CustomerServiceTest {
     @Test
     void testGetCustomerByEmail() {
         when(customerRepository.findByEmail(Mockito.anyString()))
-                .thenReturn(java.util.Optional.ofNullable(customerRes));
+                .thenReturn(Optional.ofNullable(customerRes));
         customerService.createCustomer(customerDTO);
         assertEquals(customerDTO.getName(),
                 customerService.getCustomerByEmail("email1").getName());
@@ -112,7 +106,7 @@ class CustomerServiceTest {
     @Test
     void testGetCustomerByNameStartingWith() {
         when(customerRepository.findByNameStartingWith(Mockito.anyString()))
-                .thenReturn(java.util.Optional.ofNullable(List.of(customerRes, customerRes)));
+                .thenReturn(Optional.ofNullable(List.of(customerRes, customerRes)));
         customerService.createCustomer(customerDTO);
         assertEquals(2,
                 customerService.getCustomerByNameStartingWith("cust").size());
@@ -123,7 +117,7 @@ class CustomerServiceTest {
         customerService.createCustomer(customerDTO);
         when(customerRepository.count()).thenReturn(1L);
         assertEquals(1, customerRepository.count());
-        when(customerRepository.findById(Mockito.anyLong())).thenReturn(java.util.Optional.ofNullable(customer1));
+        when(customerRepository.findById(Mockito.anyLong())).thenReturn(Optional.ofNullable(customer1));
         CustomerDTO found = customerService.updateCustomer(1L, customerDTO);
         assertEquals("xd", found.getEmail());
     }
