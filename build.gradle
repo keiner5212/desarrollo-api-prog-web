@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'eshop'
-version = '0.0.1-SNAPSHOT'
+version = '0.5'
 
 java {
 	sourceCompatibility = '17'
@@ -30,6 +30,8 @@ dependencies {
 	testImplementation 'org.testcontainers:postgresql'
 	implementation 'org.mapstruct:mapstruct:1.5.5.Final'
 	annotationProcessor 'org.mapstruct:mapstruct-processor:1.5.5.Final'
+	testImplementation 'org.mockito:mockito-core:5.5.0'
+
 }
 
 tasks.named('test') {
