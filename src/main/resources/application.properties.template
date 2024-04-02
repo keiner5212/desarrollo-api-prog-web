@@ -1,8 +1,8 @@
 spring.application.name=API-PROG-WEB
-server.port = 
-spring.datasource.url=
-spring.datasource.username=
-spring.datasource.password=
+server.port = 8080
+spring.datasource.url=jdbc:postgresql://localhost:5432/desarrollo_api_eshop
+spring.datasource.username=postgres
+spring.datasource.password=1234
 spring.datasource.driver-class-name=org.postgresql.Driver
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.open-in-view=false
