@@ -1,6 +1,7 @@
 package eshop.prod.database.service;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
 import java.util.List;
@@ -61,41 +62,66 @@ class ProductServiceTest {
 
     @Test
     void testCreateProduct() {
-
+        ProductDTO saved = productService.createProduct(productDTO);
+        assertNotNull(saved);
     }
 
     @Test
     void testDeleteProduct() {
-
+        ProductDTO saved = productService.createProduct(productDTO);
+        when(productRepository.count()).thenReturn(1L);
+        assertEquals(1L, productRepository.count());
+        productService.deleteProduct(saved.getId_product());
+        when(productRepository.count()).thenReturn(0L);
+        assertEquals(0L, productRepository.count());
     }
 
     @Test
     void testFindByNameContaining() {
-
+        productService.createProduct(productDTO);
+        when(productRepository.findBySearchTerm(Mockito.anyString())).thenReturn(Optional.of(List.of(product1)));
+        List<ProductDTO> products = productService.findByNameContaining("product");
+        assertEquals(1, products.size());
     }
 
     @Test
     void testFindByPriceLessThanAndStockGreaterThan() {
-
+        productService.createProduct(productDTO);
+        when(productRepository.findByPriceAndStockLessThan(Mockito.anyDouble(), Mockito.anyDouble())).thenReturn(Optional.of(List.of(product1)));
+        List<ProductDTO> products = productService.findByPriceLessThanAndStockGreaterThan(1.0, 10.0);
+        assertEquals(1, products.size());
     }
 
     @Test
     void testFindByStockGreaterThanZero() {
-
+        productService.createProduct(productDTO);
+        when(productRepository.findByStockGreaterThanZero()).thenReturn(Optional.of(List.of(product1)));
+        List<ProductDTO> products = productService.findByStockGreaterThanZero();
+        assertEquals(1, products.size());
     }
 
     @Test
     void testGetAllProducts() {
-
+        productService.createProduct(productDTO);
+        when(productRepository.findAll()).thenReturn(List.of(product1));
+        List<ProductDTO> products = productService.getAllProducts();
+        assertEquals(1, products.size());
     }
 
     @Test
     void testGetProductById() {
-
+        ProductDTO saved = productService.createProduct(productDTO);
+        when(productRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(product1));
+        ProductDTO product = productService.getProductById(saved.getId_product());
+        assertNotNull(product);
     }
 
     @Test
     void testUpdateProduct() {
-
+        ProductDTO saved = productService.createProduct(productDTO);
+        when(productRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(product1));
+        when(productRepository.save(Mockito.any(Product.class))).thenReturn(productRes);
+        ProductDTO updated = productService.updateProduct(saved.getId_product(), productDTO);
+        assertNotNull(updated);
     }
 }
