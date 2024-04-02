@@ -34,11 +34,11 @@ public class OrderItem {
     private Long id_order_item;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "id_order")
+    @JoinColumn(name = "order_id", referencedColumnName = "id_order")
     private Order order_id;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "id_product")
+    @JoinColumn(name = "product_id", referencedColumnName = "id_product")
     private Product product_id;
     
     @Column(nullable = false)
@@ -46,4 +46,19 @@ public class OrderItem {
     
     @Column(nullable = false)
     private Double unit_price;
+
+    public void updateOnlyNecessary(OrderItem updated) {
+        if (updated.getOrder_id() != null && this.getOrder_id() != updated.getOrder_id()) {
+            this.setOrder_id(updated.getOrder_id());
+        }
+        if (updated.getProduct_id() != null && this.getProduct_id() != updated.getProduct_id()) {
+            this.setProduct_id(updated.getProduct_id());
+        }
+        if (updated.getQuantity() != null && this.getQuantity() != updated.getQuantity()) {
+            this.setQuantity(updated.getQuantity());
+        }
+        if (updated.getUnit_price() != null && this.getUnit_price() != updated.getUnit_price()) {
+            this.setUnit_price(updated.getUnit_price());
+        }
+    }
 }

@@ -34,7 +34,7 @@ public class Order {
     private Long id_order;
 
     @ManyToOne
-    @JoinColumn(referencedColumnName = "id_customer")
+    @JoinColumn(name = "customer_id", referencedColumnName = "id_customer")
     private Customer customer_id;
 
     @Column(nullable = false)
@@ -42,5 +42,16 @@ public class Order {
 
     @Column(nullable = false)
     private String status;
-    
+
+    public void updateOnlyNecessary(Order updated) {
+        if (updated.getCustomer_id() != null && this.getCustomer_id() != updated.getCustomer_id()) {
+            this.setCustomer_id(updated.getCustomer_id());
+        }
+        if (updated.getOrder_date() != null && this.getOrder_date() != updated.getOrder_date()) {
+            this.setOrder_date(updated.getOrder_date());
+        }
+        if (updated.getStatus() != null && this.getStatus() != updated.getStatus()) {
+            this.setStatus(updated.getStatus());
+        }
+    }
 }

@@ -10,3 +10,12 @@ public class OrderItemDTO {
     private Integer quantity;
     private Double unit_price;
 }
+/*
+ json example
+ {
+    "order_id": 1,
+    "product_id": 1,
+    "quantity": 2,
+    "unit_price": 9.99
+ }
+ */

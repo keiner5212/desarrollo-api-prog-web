@@ -25,11 +25,13 @@ public interface OrderItemMapper {
         }
 
         OrderItem res = new OrderItem();
-        res.setProduct_id(productRepository.findById(orderItemDTO.getProduct_id()).orElseThrow(
+        long id = orderItemDTO.getProduct_id();
+        res.setProduct_id(productRepository.findById(id).orElseThrow(
                 () -> new IllegalArgumentException("Product not found with id: " + orderItemDTO.getProduct_id())));
         res.setQuantity(orderItemDTO.getQuantity());
         res.setUnit_price(orderItemDTO.getUnit_price());
-        res.setOrder_id(orderRepository.findById(orderItemDTO.getOrder_id())
+        id = orderItemDTO.getOrder_id();
+        res.setOrder_id(orderRepository.findById(id)
                 .orElseThrow(
                         () -> new IllegalArgumentException("Order not found with id: " + orderItemDTO.getOrder_id())));
 

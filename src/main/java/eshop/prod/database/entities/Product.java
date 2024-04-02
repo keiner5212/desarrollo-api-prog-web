@@ -1,4 +1,5 @@
 package eshop.prod.database.entities;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -45,7 +46,28 @@ public class Product {
 
     @Column(nullable = false)
     private String image;
-    
+
     @Column(nullable = false)
     private Integer stock;
+
+    public void updateOnlyNecessary(Product updated) {
+        if (updated.getName() != null && this.getName() != updated.getName()) {
+            this.setName(updated.getName());
+        }
+        if (updated.getPrice() != null && this.getPrice() != updated.getPrice()) {
+            this.setPrice(updated.getPrice());
+        }
+        if (updated.getDescription() != null && this.getDescription() != updated.getDescription()) {
+            this.setDescription(updated.getDescription());
+        }
+        if (updated.getBrand() != null && this.getBrand() != updated.getBrand()) {
+            this.setBrand(updated.getBrand());
+        }
+        if (updated.getImage() != null && this.getImage() != updated.getImage()) {
+            this.setImage(updated.getImage());
+        }
+        if (updated.getStock() != null && this.getStock() != updated.getStock()) {
+            this.setStock(updated.getStock());
+        }
+    }
 }

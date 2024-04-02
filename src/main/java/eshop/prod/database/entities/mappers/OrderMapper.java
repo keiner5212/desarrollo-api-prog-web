@@ -23,7 +23,8 @@ public interface OrderMapper {
         }
         Order res = new Order();
         res.setId_order(orderDTO.getId_order());
-        res.setCustomer_id(customerRepository.findById(orderDTO.getCustomer_id()).orElseThrow(
+        long id=orderDTO.getCustomer_id();
+        res.setCustomer_id(customerRepository.findById(id).orElseThrow(
             () -> new IllegalArgumentException("Customer not found with id: " + orderDTO.getCustomer_id())
         ));
         res.setOrder_date(orderDTO.getOrder_date());

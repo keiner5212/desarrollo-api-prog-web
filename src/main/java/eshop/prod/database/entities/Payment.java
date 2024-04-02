@@ -6,7 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -35,8 +35,8 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_payment;
 
-    @ManyToOne
-    @JoinColumn(referencedColumnName = "id_order")
+    @OneToOne
+    @JoinColumn(name = "order_id", referencedColumnName = "id_order")
     private Order order_id;
 
     @Column(nullable = false)
@@ -47,4 +47,19 @@ public class Payment {
 
     @Column(nullable = false)
     private String payment_method;
+
+    public void updateOnlyNecessary(Payment updated) {
+        if (updated.getOrder_id() != null && this.getOrder_id() != updated.getOrder_id()) {
+            this.setOrder_id(updated.getOrder_id());
+        }
+        if (updated.getAmount() != null && this.getAmount() != updated.getAmount()) {
+            this.setAmount(updated.getAmount());
+        }
+        if (updated.getPayment_date() != null && this.getPayment_date() != updated.getPayment_date()) {
+            this.setPayment_date(updated.getPayment_date());
+        }
+        if (updated.getPayment_method() != null && this.getPayment_method() != updated.getPayment_method()) {
+            this.setPayment_method(updated.getPayment_method());
+        }
+    }
 }
