@@ -97,12 +97,12 @@ class ShipmentServiceTest {
 
     @Test
     void testDeleteShipment() {
-        shipmentService.createShipment(shipmentDTO);
-        when(shipmentRepository.count()).thenReturn(2L);
-        assertEquals(2L, shipmentRepository.count());
-        shipmentService.deleteShipment(shipmentDTO.getId_shipment());
+        ShipmentDTO saved = shipmentService.createShipment(shipmentDTO);
         when(shipmentRepository.count()).thenReturn(1L);
         assertEquals(1L, shipmentRepository.count());
+        shipmentService.deleteShipment(saved.getId_shipment());
+        when(shipmentRepository.count()).thenReturn(0L);
+        assertEquals(0L, shipmentRepository.count());
     }
 
     @Test

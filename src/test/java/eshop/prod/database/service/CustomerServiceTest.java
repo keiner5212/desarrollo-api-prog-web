@@ -62,10 +62,10 @@ class CustomerServiceTest {
 
     @Test
     void testDeleteCustomer() {
-        customerService.createCustomer(customerDTO);
+        CustomerDTO saved = customerService.createCustomer(customerDTO);
         when(customerRepository.count()).thenReturn(1L);
         assertEquals(1L, customerRepository.count());
-        customerService.deleteCustomer(customerDTO.getId_customer());
+        customerService.deleteCustomer(saved.getId_customer());
         when(customerRepository.count()).thenReturn(0L);
         assertEquals(0L, customerRepository.count());
     }

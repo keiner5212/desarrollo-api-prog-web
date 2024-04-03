@@ -116,10 +116,11 @@ class OrderItemServiceTest {
 
     @Test
     void testDeleteOrderItem() {
-        orderItemService.createOrderItem(orderItemDTO);
+        when(orderItemRepository.save(Mockito.any(OrderItem.class))).thenReturn(orderItemRes);
+        OrderItemDTO saved = orderItemService.createOrderItem(orderItemDTO);
         when(orderItemRepository.count()).thenReturn(1L);
         assertEquals(1L, orderItemRepository.count());
-        orderItemService.deleteOrderItem(orderItemDTO.getId_order_item());
+        orderItemService.deleteOrderItem(saved.getId_order_item());
         when(orderItemRepository.count()).thenReturn(0L);
         assertEquals(0L, orderItemRepository.count());
     }

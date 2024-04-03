@@ -76,10 +76,10 @@ class OrderServiceTest {
 
         @Test
         void testDeleteOrder() {
-                orderService.createOrder(orderDTO);
+                OrderDTO saved = orderService.createOrder(orderDTO);
                 when(orderRepository.count()).thenReturn(1L);
                 assertEquals(1L, orderRepository.count());
-                orderService.deleteOrder(orderDTO.getId_order());
+                orderService.deleteOrder(saved.getId_order());
                 when(orderRepository.count()).thenReturn(0L);
                 assertEquals(0L, orderRepository.count());
         }
