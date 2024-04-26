@@ -41,6 +41,8 @@ class OrderRepositoryTest extends RepositoryTestParent {
                 .name("customer1")
                 .email("email1")
                 .address("address1")
+                .password("password")
+                .role("USER")
                 .build());
         order1 = Order.builder()
                 .customer_id(customer1)

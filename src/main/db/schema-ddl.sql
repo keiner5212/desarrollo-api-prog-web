@@ -25,12 +25,16 @@ CREATE TABLE product (
 -- ● nombre: nombre completo del cliente
 -- ● email: email del cliente
 -- ● dirección: dirección física del cliente
+-- ● password: contraseña del cliente
+-- ● role: rol del cliente
 
 CREATE TABLE customer (
     id_customer SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    address VARCHAR(255) NOT NULL
+    address VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(255) NOT NULL CHECK (role IN ('USER', 'ADMIN')) DEFAULT 'USER'
 );
 
 -- Pedido: representa un pedido de compra realizado por un cliente.

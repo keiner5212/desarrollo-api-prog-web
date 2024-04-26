@@ -8,6 +8,8 @@ public class CustomerDTO {
     private String name;
     private String email;
     private String address;
+    private String password;
+    private String role;
 }
 
 /*
@@ -15,6 +17,7 @@ public class CustomerDTO {
  {
     "name": "John Doe",
     "email": "HbqFP@example.com",
-    "address": "123 Main St, Anytown USA"
+    "address": "123 Main St, Anytown USA",
+    "password": "password"
  }
  */

@@ -26,12 +26,16 @@ class CustomerRepositoryTest extends RepositoryTestParent {
         .name("customer1")
         .email("email1")
         .address("address1")
+        .password("password")
+        .role("USER")
         .build();
 
         customer2=Customer.builder()
         .name("customer2")
         .email("email2")
         .address("address2")
+        .password("password")
+        .role("USER")
         .build();
     }
     

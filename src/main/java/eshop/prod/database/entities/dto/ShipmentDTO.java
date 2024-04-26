@@ -10,3 +10,13 @@ public class ShipmentDTO {
     private String carrier;
     private String tracking_number;
 }
+
+/*
+ json example
+ {
+    "order_id": 1,
+    "address": "123 Main St, Anytown USA",
+    "carrier": "Fedex",
+    "tracking_number": "123456789"
+ }
+ */

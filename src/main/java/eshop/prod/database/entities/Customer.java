@@ -15,7 +15,9 @@ import lombok.NoArgsConstructor;
 //     id_customer SERIAL PRIMARY KEY,
 //     name VARCHAR(255) NOT NULL,
 //     email VARCHAR(255) NOT NULL,
-//     address VARCHAR(255) NOT NULL
+//     address VARCHAR(255) NOT NULL,
+    // password VARCHAR(255) NOT NULL,
+    // role VARCHAR(255) NOT NULL
 // );
 
 @Entity
@@ -39,8 +41,13 @@ public class Customer {
     @Column(nullable = false)
     private String address;
 
-    public void updateOnlyNecessary(Customer updated) {
+    @Column(nullable = false)
+    private String password;
 
+    @Column(nullable = false)
+    private String role;
+
+    public void updateOnlyNecessary(Customer updated) {
         if (updated.getName() != null && this.getName() != updated.getName()) {
             this.setName(updated.getName());
         }
@@ -49,6 +56,12 @@ public class Customer {
         }
         if (updated.getAddress() != null && this.getAddress() != updated.getAddress()) {
             this.setAddress(updated.getAddress()); 
+        }
+        if (updated.getPassword() != null && this.getPassword() != updated.getPassword()) {
+            this.setPassword(updated.getPassword());
+        }
+        if (updated.getRole() != null && this.getRole() != updated.getRole()) {
+            this.setRole(updated.getRole());
         }
     }
     

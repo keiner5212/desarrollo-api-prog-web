@@ -52,6 +52,8 @@ class OrderItemServiceTest {
             .name("customer1")
             .email("email1")
             .address("address1")
+            .password("password")
+            .role("USER")
             .build();
 
     Order order1 = Order.builder()
@@ -86,13 +88,13 @@ class OrderItemServiceTest {
             .unit_price(1.0)
             .build();
 
-            OrderItem orderItemRes2 = OrderItem.builder()
-                    .id_order_item(1L)
-                    .order_id(order1)
-                    .product_id(product1)
-                    .quantity(10)
-                    .unit_price(1.0)
-                    .build();
+    OrderItem orderItemRes2 = OrderItem.builder()
+            .id_order_item(1L)
+            .order_id(order1)
+            .product_id(product1)
+            .quantity(10)
+            .unit_price(1.0)
+            .build();
 
     OrderItemDTO orderItemDTO = OrderItemMapper.INSTANCE.orderItemToOrderItemDTO(orderItem1);
 
@@ -145,7 +147,8 @@ class OrderItemServiceTest {
     void testGetOrderItemsByOrderId() {
         when(orderItemRepository.save(Mockito.any(OrderItem.class))).thenReturn(orderItemRes);
         orderItemService.createOrderItem(orderItemDTO);
-        when(orderItemRepository.findByOrderId(Mockito.anyLong())).thenReturn(Optional.ofNullable(List.of(orderItemRes)));
+        when(orderItemRepository.findByOrderId(Mockito.anyLong()))
+                .thenReturn(Optional.ofNullable(List.of(orderItemRes)));
         assertEquals(1, orderItemService.getOrderItemsByOrderId(1L).size());
     }
 
@@ -153,7 +156,8 @@ class OrderItemServiceTest {
     void testGetOrderItemsByProductId() {
         when(orderItemRepository.save(Mockito.any(OrderItem.class))).thenReturn(orderItemRes);
         orderItemService.createOrderItem(orderItemDTO);
-        when(orderItemRepository.findByProductId(Mockito.anyLong())).thenReturn(Optional.ofNullable(List.of(orderItemRes)));
+        when(orderItemRepository.findByProductId(Mockito.anyLong()))
+                .thenReturn(Optional.ofNullable(List.of(orderItemRes)));
         assertEquals(1, orderItemService.getOrderItemsByProductId(1L).size());
     }
 
@@ -162,7 +166,7 @@ class OrderItemServiceTest {
         when(orderItemRepository.save(Mockito.any(OrderItem.class))).thenReturn(orderItemRes);
         orderItemService.createOrderItem(orderItemDTO);
         when(orderItemRepository.findTotalSellByProductId(Mockito.anyLong())).thenReturn(Optional.ofNullable(5));
-        int total= orderItemService.getTotalSellByProductId(1L);
+        int total = orderItemService.getTotalSellByProductId(1L);
         assertEquals(5, total);
     }
 
@@ -172,7 +176,7 @@ class OrderItemServiceTest {
         OrderItemDTO orderItemDTOSaved = orderItemService.createOrderItem(orderItemDTO);
         orderItemDTOSaved.setQuantity(10);
         when(orderItemRepository.save(Mockito.any(OrderItem.class))).thenReturn(orderItemRes2);
-        OrderItemDTO updated = orderItemService.updateOrderItem(1L,orderItemDTO);
+        OrderItemDTO updated = orderItemService.updateOrderItem(1L, orderItemDTO);
         assertEquals(10, updated.getQuantity().intValue());
     }
 }

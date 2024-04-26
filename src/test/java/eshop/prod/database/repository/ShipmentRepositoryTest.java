@@ -39,6 +39,8 @@ class ShipmentRepositoryTest extends RepositoryTestParent {
                 .name("customer1")
                 .email("email1")
                 .address("address1")
+                .password("password")
+                .role("USER")
                 .build());
         order1 = orderRepository.save(Order.builder()
                 .customer_id(customer1)

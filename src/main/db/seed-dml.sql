@@ -20,13 +20,15 @@ INSERT INTO product (name, price, description, brand, image, stock) VALUES
 --     id_customer SERIAL PRIMARY KEY,
 --     name VARCHAR(255) NOT NULL,
 --     email VARCHAR(255) NOT NULL,
---     address VARCHAR(255) NOT NULL
+--     address VARCHAR(255) NOT NULL,
+--     password VARCHAR(255) NOT NULL,
+--     role VARCHAR(255) NOT NULL
 -- )
 
-INSERT INTO customer (name, email, address) VALUES
-('John Doe', 'G5z5Q@example.com', '123 Main St, Anytown, USA'),
-('Jane Smith', '4vXUJ@example.com', '456 Oak St, Anytown, USA'),
-('Bob Johnson', 'Jpj6A@example.com', '789 Pine St, Anytown, USA');
+INSERT INTO customer (name, email, address, password) VALUES
+('John Doe', 'G5z5Q@example.com', '123 Main St, Anytown, USA', '$2a$10$rV8hVjYTEkQgBonQr98uv.zopeqh009M/w0aZaCiJKhPTYgz0DUv.'), -- password: password
+('Jane Smith', '4vXUJ@example.com', '456 Oak St, Anytown, USA', '$2a$10$rV8hVjYTEkQgBonQr98uv.zopeqh009M/w0aZaCiJKhPTYgz0DUv.'), -- password: password
+('Bob Johnson', 'Jpj6A@example.com', '789 Pine St, Anytown, USA', '$2a$10$rV8hVjYTEkQgBonQr98uv.zopeqh009M/w0aZaCiJKhPTYgz0DUv.'); -- password: password
 
 
 -- CREATE TABLE orders (

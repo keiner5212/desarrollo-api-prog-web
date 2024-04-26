@@ -12,3 +12,15 @@ public class ProductDTO {
     private String image;
     private Integer stock;
 }
+
+/*
+ json example
+ {
+    "name": "T-Shirt",
+    "price": 10.99,
+    "description": "A basic t-shirt",
+    "brand": "T-Shirt Company",
+    "image": "https://www.filmyvastra.com/wp-content/uploads/2019/06/Black-Wide-tshirt-without-hanger-Recovered-scaled.jpg",
+    "stock": 100
+ }
+ */

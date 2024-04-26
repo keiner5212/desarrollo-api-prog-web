@@ -45,6 +45,8 @@ class OrderServiceTest {
                         .name("customer1")
                         .email("email1")
                         .address("address1")
+                        .password("password")
+                        .role("USER")
                         .build();
         Order order1 = Order.builder()
                         .customer_id(customer)
