@@ -36,7 +36,6 @@ class CustomerServiceTest {
             .email("email1")
             .address("address1")
             .password("password")
-            .role("USER")
             .build();
     Customer customerRes = Customer.builder()
             .id_customer(1L)
@@ -44,7 +43,6 @@ class CustomerServiceTest {
             .email("xd")
             .address("address1")
             .password("password")
-            .role("USER")
             .build();
 
     CustomerDTO customerDTO = CustomerMapper.INSTANCE.customerToCustomerDTO(customer1);

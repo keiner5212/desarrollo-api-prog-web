@@ -49,7 +49,6 @@ class ShipmentServiceTest {
             .email("email1")
             .address("address1")
             .password("password")
-            .role("USER")
             .build();
     Order order1 = Order.builder()
             .id_order(1L)

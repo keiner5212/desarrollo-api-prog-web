@@ -51,7 +51,6 @@ class PaymentServiceTest {
             .email("email1")
             .address("address1")
             .password("password")
-            .role("USER")
             .build();
     Order order=Order.builder()
             .id_order(1L)
