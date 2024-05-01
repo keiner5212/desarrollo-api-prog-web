@@ -7,6 +7,7 @@ import javax.crypto.SecretKey;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 
 import io.jsonwebtoken.Claims;
@@ -21,13 +22,21 @@ import eshop.prod.utils.constants.Security;
 @Component
 @Slf4j
 public class JWTGenerator {
-	@Value("${jwt.secretKey}")
-	private static String secretKeyString;
+	
+    @Value("${jwt.secretKey}")
+    private String secretKeyString;
+    
+    private SecretKey key;
+
+	// the values of the application.properties file are injected on runtime, so we need to use @PostConstruct  
+	// and remove the "static" 
+    @PostConstruct
+    public void init() {
+        key = Keys.hmacShaKeyFor(secretKeyString.getBytes(StandardCharsets.UTF_8));
+    }
 	
 	// this generates a new key every time the server restarts (may be a problem)
 	// private static final SecretKey key = Jwts.SIG.HS512.key().build();
-
-	private static final SecretKey key = Keys.hmacShaKeyFor(secretKeyString.getBytes(StandardCharsets.UTF_8));
 
 	public String generateToken(Authentication authentication) {
 

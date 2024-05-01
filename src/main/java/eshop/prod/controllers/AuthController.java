@@ -53,7 +53,7 @@ public class AuthController {
         if (existingCustomer == null
                 || !passwordEncoder.matches(customerDTO.getPassword(), existingCustomer.getPassword())) {
             HashMap<String, Object> errorResponse = new HashMap<>();
-            errorResponse.put("error", "Credenciales incorrectas");
+            errorResponse.put("error", "Invalid credentials");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
         }
 
