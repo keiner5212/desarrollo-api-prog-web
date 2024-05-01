@@ -48,6 +48,25 @@ public class ProductController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @GetMapping("/search/{seacrh}")
+    public ResponseEntity<HashMap<String, Object>> getProductsBySearch(@PathVariable("seacrh") String seacrh) {
+        log.info("Getting products by search: " + seacrh);
+        HashMap<String, Object> response = new HashMap<>();
+        List<ProductDTO> data = productService.findByNameContaining(seacrh);
+        response.put("data", data);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("/price-stock/{price}/{stock}")
+    public ResponseEntity<HashMap<String, Object>> getProductsByPriceAndStock(@PathVariable("price") Double price,
+            @PathVariable("stock") Double stock) {
+        log.info("Getting products by price and stock: " + price + " " + stock);
+        HashMap<String, Object> response = new HashMap<>();
+        List<ProductDTO> data = productService.findByPriceLessThanAndStockGreaterThan(price, stock);
+        response.put("data", data);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @GetMapping("/stock")
     public ResponseEntity<HashMap<String, Object>> getProductsByStock() {
         log.info("Getting products by stock");

@@ -52,7 +52,7 @@ public class PaymentController {
     @GetMapping("/order/{id}/payment-method/{paymentMethod}") // get orderID
     public ResponseEntity<HashMap<String, Object>> getPaymentByOrderId(@PathVariable("id") Long id,
             @PathVariable("paymentMethod") String paymentMethod) {
-        log.info("Getting payment item by order id: " + id);
+        log.info("Getting payment item by order id: " + id + " and payment method: " + paymentMethod);
         PaymentDTO data = paymentService.findByOrderIdAndPaymentMethod(id, paymentMethod);
         HashMap<String, Object> response = new HashMap<>();
         if (data == null) {

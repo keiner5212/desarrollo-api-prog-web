@@ -61,7 +61,7 @@ public class ShipmentController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
-    @GetMapping("/order/{nameCarrier}")
+    @GetMapping("/carrier/{nameCarrier}")
     public ResponseEntity<HashMap<String, Object>> getShipmentsByCarrier(
             @PathVariable("nameCarrier") String nameCarrier) {
         log.info("Getting shipments by carrier name: " + nameCarrier);
