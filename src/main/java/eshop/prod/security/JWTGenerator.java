@@ -1,4 +1,4 @@
-package eshop.prod.database.entities.segurity;
+package eshop.prod.security;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Date;

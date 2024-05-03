@@ -1,4 +1,4 @@
-package eshop.prod.database.entities.segurity;
+package eshop.prod.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

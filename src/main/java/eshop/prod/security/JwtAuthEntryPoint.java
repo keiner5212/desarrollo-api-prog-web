@@ -1,4 +1,4 @@
-package eshop.prod.database.entities.segurity;
+package eshop.prod.security;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;

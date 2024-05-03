@@ -15,8 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import eshop.prod.database.entities.dto.CustomerDTO;
-import eshop.prod.database.entities.segurity.JWTGenerator;
 import eshop.prod.database.service.CustomerService;
+import eshop.prod.security.JWTGenerator;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController

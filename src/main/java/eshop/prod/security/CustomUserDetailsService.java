@@ -1,4 +1,4 @@
-package eshop.prod.database.entities.segurity;
+package eshop.prod.security;
 
 import eshop.prod.database.entities.Customer;
 import eshop.prod.database.repository.CustomerRepository;
